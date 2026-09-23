@@ -1,0 +1,5 @@
+Assign roles (Project Manager, System Analyst, Developers, Testers, Business Analyst, Information Designer).
+
+Set milestones (documentation, theoretical work, practical implementation, poster, presentation).
+
+Establish timeline and deadlines.
