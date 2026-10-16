@@ -1,0 +1,113 @@
+5. BUSINESS OBJECTIVES
+5.1 Business Success Criteria
+•	The model should produce useful predictions with acceptable errors.
+•	Model performance should be measured using R², MAE and RMSE.
+•	The prediction results should be clear and easy to understand.
+•	The data preparation and model results should be reproducible.
+•	The final solution should provide a simple way to estimate a transaction value.
+5.2 Requirements
+Data
+•	Historical retail sales data (Dataset).
+•	Customer information such as quantity, unit_price, discount_pct, date, sales_channel, payment_method and region
+•	Sales_amount as the target variable.
+
+5.3 Technical requirements
+•	Python and machine learning tools.
+•	A trained prediction model.
+•	Tables or charts to show the results.
+5.4 Constraints
+•	The solution depends on the information available in the dataset.
+•	The project estimates transaction value and does not predict future stock demand.
+•	The model cannot make predictions using information that is not available in the dataset.
+5.5 Risks
+•	Poor data quality can affect the results.
+•	Missing values can reduce the amount of usable data.
+•	The model may not perform well if the data does not represent future transactions.
+•	Using variables that directly calculate the target can cause data leakage.
+ 5.6 Sales Regression (Multiple Linear Regression)
+      Machine Learning Type
+•	Supervised machine learning
+•	Regression (predicts a continuous number)
+•	Algorithm: Multiple Linear Regression
+       One-Hot Encoding
+•	Done with pd.get_dummies (X, columns=categorical_features, drop_first=True, dtype=int)
+•	Each text category becomes its own column of 0 or 1
+•	drop_first=True avoids the dummy variable trap
+•	Applied to: sales_channel, payment_method, region
+•	The prediction tool uses the same encoding, so new data matches the trained model
+       Method of Converting Words to Numbers
+•	One-hot encoding for text categories
+•	Date feature extraction: transaction_date converted with pd.to_datetime(errors="coerce"), then split into year, month, day, day_of_week
+•	Prediction tool: menu choices (1, 2, 3...) are first mapped to category names using if/elif statements and dictionaries
+       Features Used
+•	Numeric: quantity, unit_price, discount_pct, year, month, day, day_of_week
+•	Categorical: sales_channel, payment_method, region
+•	Target: sales_amount
+•	Excluded: gross_sales and discount_amount (calculated from sales data, so they would leak the answer)
+       Saving and Loading the Model
+•	Saving (training script): 
+o	The trained model is saved with joblib.dump(model, "sales_model.pkl")
+o	The list of feature column names is saved with joblib. dump(X.columns.tolist(), "model_features.pkl")
+o	Both files are saved in the same folder as the program (found with os.path)
+•	Loading (prediction tool): 
+o	Checks that both .pkl files exist before running
+o	Loads the model with joblib.load("sales_model.pkl")
+o	Loads the feature names with joblib.load("model_features.pkl")
+o	Uses reindex (columns=model_features, fill_value=0) so the new data has the same columns, in the same order, as training
+o	Makes a prediction with model.predict(); no new training happens
+5.7 Tools
+•	Programming
+•	Python libraries
+•	pandas (pd)
+•	numpy (np)
+•	matplotlib.pyplot (plt)
+•	scikit-learn (sklearn) 
+o	train_test_split
+o	LinearRegression
+o	r2_score
+o	mean_absolute_error
+o	mean_squared_error
+•	joblib
+•	os
+•	GitHub Developer Platform
+•	Git
+•	Python IDE (Coding platform)
+•	Word
+•	Excel
+•	Photoshop
+•	Grammarly
+•	Canva
+•	AI Programs
+•	PowerPoint
+•	Retail_sales_dataset.csv
+•	sales_model.pkl
+•	model_features.pkl
+•	Visualization: Actual vs. Predicted scatter plot with a perfect-prediction line
+5.8 Techniques
+•	Data preparation
+•	Converting non-numerical data into numerical data (one-hot encoding)
+•	Converting invalid dates to NaN (errors="coerce")
+•	Removing rows with NaN
+•	Model training 
+o	Supervised machine learning approach
+o	Use a regression algorithm
+o	Linear regression: models the relationship between multiple input features and sales amount using a linear equation
+•	Train/test split
+•	Saving the trained model (joblib)
+•	Loading a saved model (joblib)
+•	Checking that required files exist before running
+•	Collecting user input (numbers, date, menu choices)
+•	Input validation (invalid date, invalid menu choices)
+•	Matching the new data to the model's features (reindex)
+•	Predicting with model.predict()
+       Split Type
+•	Train/test split (hold-out method) using train_test_split
+•	60% training / 40% testing (test_size=0.40)
+•	Random split with random_state=42 for reproducible results
+•	Done in the training script only; the prediction tool does no splitting
+5.9 Evaluation Metrics
+•	R² Score
+•	Mean Absolute Error (MAE)
+•	Root Mean Squared Error (RMSE)
+•	Actual vs Predicted Sales Amount scatter plot (made with matplotlib)
+•	Calculated in the training script only; the prediction tool only makes predictions
